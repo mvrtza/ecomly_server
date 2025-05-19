@@ -3,16 +3,26 @@ const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
+const authRouter = require('./routes/auth')
+const usersRouter = require('./routes/users')
+const adminRouter = require('./routes/users')
+const authJwt = require('./middlewares/jwt')
+const errorHandler = require('./middlewares/error_handler')
 require('dotenv/config')
 const app = express()
 const API = process.env.API_URL
 app.use(bodyParser.json())
 app.use(morgan('tiny'))
 app.use(cors())
+app.use(authJwt())
+app.use(errorHandler)
 // app.options('*', cors())
 
-const authRouter = require('./routes/auth')
+
 app.use(`${API}/`,authRouter)
+app.use(`${API}/users`,usersRouter)
+app.use(`${API}/admin`,adminRouter)
+
 
 
 //Start the server

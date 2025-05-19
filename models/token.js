@@ -9,4 +9,6 @@ const tokenSchema = Schema(
 
     }
 );
+tokenSchema.set('toObject',{virtuals:true})
+tokenSchema.set('toJSON',{virtuals:true})
 exports.Token = model('Token', tokenSchema)
